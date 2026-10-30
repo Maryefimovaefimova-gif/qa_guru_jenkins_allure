@@ -15,6 +15,17 @@ load_dotenv()
 print("After load_dotenv, SELENOID_LOGIN =", os.getenv("SELENOID_LOGIN"))
 print("=================\n")
 
+
+@pytest.fixture(scope="function")
+def setup_browser(browser, headless, resolution, selenoid_url):
+    # Автоматически получаем первую доступную версию Chrome
+    username = "user1"  # Ваши учётные данные
+    password = "1234"
+    browser_version = get_first_available_chrome_version(selenoid_url, username, password)
+
+    if browser == "chrome":
+        options = ChromeOptions()
+
 @pytest.fixture(scope="session", autouse=True)
 def load_env():
     # find_dotenv() найдёт файл .env, даже если рабочая директория другая
@@ -50,8 +61,8 @@ def pytest_addoption(parser):
 
     parser.addoption(
         "--browser-version",
-        default="152.0",
-        choices=("152.0", "151.0"),
+        default="124.0",
+        choices=("124.0", "124.0"),
         help="Browser version"
     )
 
