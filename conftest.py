@@ -8,13 +8,6 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from dotenv import find_dotenv, load_dotenv
 
-print("\n=== DEBUG ENV ===")
-print("CWD:", os.getcwd())
-print("Before load_dotenv, SELENOID_LOGIN =", os.getenv("SELENOID_LOGIN"))
-load_dotenv()
-print("After load_dotenv, SELENOID_LOGIN =", os.getenv("SELENOID_LOGIN"))
-print("=================\n")
-
 
 @pytest.fixture(scope="function")
 def setup_browser(browser, headless, resolution, selenoid_url):
@@ -146,7 +139,7 @@ def setup_browser(
         raise ValueError(f"Unsupported browser: {browser}")
 
     options.set_capability("browserName", browser)
-    options.set_capability("browserVersion", browser_version)
+    #options.set_capability("browserVersion", browser_version)
 
     options.set_capability(
         "selenoid:options",
